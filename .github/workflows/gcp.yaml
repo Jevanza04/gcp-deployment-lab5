@@ -40,7 +40,9 @@ jobs:
           mv index.html public/  # Move the index.html to public folder
 
       - name: Authenticate with Service Account
-        run: gcloud auth activate-service-account --key-file=${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 --decode > gcp-key.json
+          gcloud auth activate-service-account --key-file=gcp-key.json
 
       - name: Upload Files to GCP Storage Bucket
         run: |
