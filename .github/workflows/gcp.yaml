@@ -47,4 +47,4 @@ jobs:
           gsutil -m rsync -R public gs://it718lab3-triple-grove-449216-p6
 
       - name: Verify Deployment
-        run: echo "Website deployed to: https://storage.googleapis.com/it718lab3-triple-grove-449216-p6/index.html"
+        run: echo "Website deployed to https://storage.googleapis.com/it718lab3-triple-grove-449216-p6/index.html"
