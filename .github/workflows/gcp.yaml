@@ -3,7 +3,7 @@ name: Deploy to Google Cloud Storage
 on:
   push:
     branches:
-      - main  # Runs the workflow when pushing to the main branch
+      - main
 
 jobs:
   deploy:
@@ -28,8 +28,8 @@ jobs:
       - name: Create Public Directory & Move Files
         run: |
           mkdir -p public
-          mv index.html public/index.html  # Move the index.html file
-          if [ -d "assets" ]; then mv assets public/assets; fi  # Only move assets if it exists
+          mv index.html public/index.html  # Move index.html
+          if [ -d "assets" ]; then mv assets public/assets; fi
 
       - name: Upload Files to GCP Storage Bucket
         run: |
