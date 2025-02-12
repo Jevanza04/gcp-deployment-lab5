@@ -1,4 +1,4 @@
-name: Deploy to Google Cloud Storage
+name: Deploy to GCP Storage
 
 on:
   push:
@@ -7,10 +7,12 @@ on:
 
 jobs:
   deploy:
+    name: Upload to GCP Storage
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout Repository
@@ -21,15 +23,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Install Google Cloud CLI
+      - name: Install Google Cloud SDK
         run: |
-          sudo apt-get update && sudo apt-get install -y google-cloud-cli
+          sudo apt-get update && sudo apt-get install -y google-cloud-sdk
 
       - name: Create Public Directory & Move Files
         run: |
           mkdir -p public
-          mv index.html public/index.html  # Move index.html
-          if [ -d "assets" ]; then mv assets public/assets; fi
+          mv index.html public/  # Move the index.html to public folder
 
       - name: Upload Files to GCP Storage Bucket
         run: |
@@ -40,5 +41,4 @@ jobs:
           gsutil -m acl ch -r -u AllUsers:R gs://it718lab3-triple-grove-449216-p6
 
       - name: Verify Deployment
-        run: |
-          echo "Website deployed at: https://storage.googleapis.com/it718lab3-triple-grove-449216-p6/index.html"
+        run: echo "Website deployed to: https://storage.googleapis.com/it718lab3-triple-grove-449216-p6/index.html"
