@@ -22,6 +22,7 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          token_format: access_token
 
       - name: Install Google Cloud SDK
         run: |
@@ -39,6 +40,7 @@ jobs:
 
       - name: Upload Files to GCP Storage Bucket
         run: |
+          gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
           gsutil -m rsync -R public gs://it718lab3-triple-grove-449216-p6
 
       - name: Make Files Public
