@@ -28,9 +28,9 @@ jobs:
       - name: Create Public Directory & Move Files
         run: |
           mkdir -p public
-          mv index.html public/index.html  # Move the index.html file to public folder
-          mv assets public/assets  # Move the assets folder (if any)
-          
+          mv index.html public/index.html  # Move the index.html file
+          if [ -d "assets" ]; then mv assets public/assets; fi  # Only move assets if it exists
+
       - name: Upload Files to GCP Storage Bucket
         run: |
           gsutil -m rsync -R public gs://it718lab3-triple-grove-449216-p6
